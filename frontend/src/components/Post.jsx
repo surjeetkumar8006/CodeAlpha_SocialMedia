@@ -3,6 +3,7 @@ import { Heart, MessageCircle, Bookmark } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
+import { API_BASE_URL } from '../config';
 
 const Post = ({ post }) => {
     const { user } = useContext(AuthContext);
@@ -21,7 +22,7 @@ const Post = ({ post }) => {
         if (!user) return alert('Please login to like');
         try {
             const token = localStorage.getItem('social_token');
-            const res = await axios.put(`http://localhost:5001/api/posts/like/${post._id}`, {}, {
+            const res = await axios.put(`${API_BASE_URL}/api/posts/like/${post._id}`, {}, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setLikes(res.data);
@@ -46,7 +47,7 @@ const Post = ({ post }) => {
     const loadComments = async () => {
         if (!showComments) {
             try {
-                const res = await axios.get(`http://localhost:5001/api/posts/comment/${post._id}`);
+                const res = await axios.get(`${API_BASE_URL}/api/posts/comment/${post._id}`);
                 setComments(res.data);
             } catch (err) {
                 console.error(err);
@@ -60,7 +61,7 @@ const Post = ({ post }) => {
         if (!user) return alert('Please login to comment');
         try {
             const token = localStorage.getItem('social_token');
-            const res = await axios.post(`http://localhost:5001/api/posts/comment/${post._id}`, { text: commentText }, {
+            const res = await axios.post(`${API_BASE_URL}/api/posts/comment/${post._id}`, { text: commentText }, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setComments([{ ...res.data, user: { name: user.name, profilePic: user.profilePic } }, ...comments]);

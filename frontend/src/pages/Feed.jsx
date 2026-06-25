@@ -4,6 +4,7 @@ import Post from '../components/Post';
 import { AuthContext } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
 import { UserPlus, UserMinus, Sparkles } from 'lucide-react';
+import { API_BASE_URL } from '../config';
 
 const Feed = () => {
     const [posts, setPosts] = useState([]);
@@ -14,7 +15,7 @@ const Feed = () => {
 
     const fetchPosts = async () => {
         try {
-            const res = await axios.get('http://localhost:5001/api/posts');
+            const res = await axios.get(`${API_BASE_URL}/api/posts`);
             setPosts(res.data);
         } catch (err) {
             console.error(err);
@@ -25,7 +26,7 @@ const Feed = () => {
         if (!user) return;
         try {
             const token = localStorage.getItem('social_token');
-            const res = await axios.get('http://localhost:5001/api/users', {
+            const res = await axios.get(`${API_BASE_URL}/api/users`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setSuggestedUsers(res.data.slice(0, 5)); // show top 5 suggestions
@@ -43,7 +44,7 @@ const Feed = () => {
         e.preventDefault();
         try {
             const token = localStorage.getItem('social_token');
-            const res = await axios.post('http://localhost:5001/api/posts', { text: newPostText }, {
+            const res = await axios.post(`${API_BASE_URL}/api/posts`, { text: newPostText }, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             const newPost = { ...res.data, user: { _id: user.id, name: user.name, profilePic: user.profilePic } };
@@ -57,7 +58,7 @@ const Feed = () => {
     const handleFollowToggle = async (userId) => {
         try {
             const token = localStorage.getItem('social_token');
-            await axios.put(`http://localhost:5001/api/users/follow/${userId}`, {}, {
+            await axios.put(`${API_BASE_URL}/api/users/follow/${userId}`, {}, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             

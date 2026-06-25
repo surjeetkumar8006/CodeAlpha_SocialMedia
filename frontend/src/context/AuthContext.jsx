@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_BASE_URL } from '../config';
 
 export const AuthContext = createContext();
 
@@ -12,14 +13,14 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     const login = async (email, password) => {
-        const res = await axios.post('http://localhost:5001/api/auth/login', { email, password });
+        const res = await axios.post(`${API_BASE_URL}/api/auth/login`, { email, password });
         setUser(res.data.user);
         localStorage.setItem('social_user', JSON.stringify(res.data.user));
         localStorage.setItem('social_token', res.data.token);
     };
 
     const register = async (name, email, password) => {
-        const res = await axios.post('http://localhost:5001/api/auth/register', { name, email, password });
+        const res = await axios.post(`${API_BASE_URL}/api/auth/register`, { name, email, password });
         setUser(res.data.user);
         localStorage.setItem('social_user', JSON.stringify(res.data.user));
         localStorage.setItem('social_token', res.data.token);

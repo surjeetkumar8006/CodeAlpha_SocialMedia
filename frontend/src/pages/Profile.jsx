@@ -4,6 +4,7 @@ import axios from 'axios';
 import Post from '../components/Post';
 import { AuthContext } from '../context/AuthContext';
 import { Users } from 'lucide-react';
+import { API_BASE_URL } from '../config';
 
 const Profile = () => {
     const { id } = useParams();
@@ -14,10 +15,10 @@ const Profile = () => {
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const resUser = await axios.get(`http://localhost:5001/api/users/${id}`);
+                const resUser = await axios.get(`${API_BASE_URL}/api/users/${id}`);
                 setProfileUser(resUser.data);
 
-                const resPosts = await axios.get('http://localhost:5001/api/posts');
+                const resPosts = await axios.get(`${API_BASE_URL}/api/posts`);
                 // Filter posts for this user
                 setUserPosts(resPosts.data.filter(p => p.user._id === id));
             } catch (err) {
@@ -30,7 +31,7 @@ const Profile = () => {
     const handleFollow = async () => {
         try {
             const token = localStorage.getItem('social_token');
-            const res = await axios.put(`http://localhost:5001/api/users/follow/${id}`, {}, {
+            const res = await axios.put(`${API_BASE_URL}/api/users/follow/${id}`, {}, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             // Update the followers list dynamically in the UI
