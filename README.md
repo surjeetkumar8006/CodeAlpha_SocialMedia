@@ -1,5 +1,9 @@
 # NexusConnect - Modern Social Media Platform
 
+## 🔗 Live Demo
+Visit the live, production-deployed backend API here:
+👉 **[NexusConnect Live API](https://codealpha-socialmedia-vnuh.onrender.com)**
+
 NexusConnect is a premium, full-stack social media application featuring an interactive post feed, user profiles, liking/commenting capability, follow/unfollow updates, who-to-follow sidebar suggestions, and a bookmarking/saving filter.
 
 ## 🚀 Key Features
